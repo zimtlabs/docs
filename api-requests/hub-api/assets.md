@@ -1083,4 +1083,123 @@ Unique asset id
 {% endtab %}
 {% endtabs %}
 
+
+
+***
+
+## Change privacy
+
+{% swagger method="post" path="/assets/:id/privacy" baseUrl="https://api.zi.mt" summary="" %}
+{% swagger-description %}
+<mark style="color:red;">**`AUTHORIZED`**</mark>
+
+
+
+Assets are public by default.
+
+If the parameter protected is defined security\_token&#x20;
+
+
+{% endswagger-description %}
+
+{% swagger-parameter in="path" name="id" type="String" required="true" %}
+Unique asset id
+{% endswagger-parameter %}
+
+{% swagger-parameter in="header" name="Authorization" type="String" required="true" %}
+JWT token
+{% endswagger-parameter %}
+
+{% swagger-response status="200: OK" description="Success" %}
+```json
+{
+  "response": {
+    "proof": "123",
+    "id": "11",
+    "object": {
+      "meta": {
+        "created_by": "0xf8C6fe32259915656FbC028B51d02f10CA84abbE",
+        "created_at": 1661175493200
+      },
+      "signature": "0xe633051fc76ae..."
+    },
+    "data": {
+      "minted": false,
+      "properties": {
+        "nft": {
+          "confirmed": false
+        }
+      },
+      "status": {
+        "hidden": false
+      }
+    },
+    "receipt": {
+      "id_hash": "0xf94c888c3983844ffc04006fabf04577c9a37ff8893423478d096754e20acfdf",
+      "received_by": "0x678b3c5090B25b3a63120CF0218750886e37A96E",
+      "received_at": 1661175493200,
+      "organization_id": "1",
+      "account_id": "11"
+    },
+    "ownership": {
+      "account_id": "11"
+    },
+    "hub_meta": {
+      "modified_at": 1695146742,
+      "privacy": {
+        "protected": true,
+        "secret_token": "0x123"
+      }
+    }
+  },
+  "status": "ok"
+}
+```
+{% endswagger-response %}
+
+{% swagger-response status="400: Bad Request" description="Validation error" %}
+```json
+{
+    "status": "error", 
+    "message": "Validation error",
+    "errors": ""
+}
+```
+{% endswagger-response %}
+
+{% swagger-response status="401: Unauthorized" description="Unauthorized request" %}
+```json
+{
+    "status": "error", 
+    "message": "Unauthorized",
+}
+```
+{% endswagger-response %}
+{% endswagger %}
+
+<details>
+
+<summary>Body schema</summary>
+
+```json
+{
+	"private": boolean, // true/false
+	"protected": boolean, // true/false
+	"secret_token": string // encrypted raw password
+}
+```
+
+```json
+{
+	"protected": true,
+	"secret_token": "0x123"
+}
+```
+
+</details>
+
+
+
+
+
 ***
