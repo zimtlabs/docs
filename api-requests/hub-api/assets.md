@@ -495,6 +495,12 @@ JWT token
 The "Get single asset" endpoint allows users to retrieve information about a specific asset, either through a protected or public request.
 
 When making a public request, users do not need to include an authorization token. However, they will only be able to access basic information about the asset, such as its name and description. They will not be able to access any sensitive or private information about the asset.
+
+
+
+If the <mark style="color:blue;">**`secret_token`**</mark>(password) is not provided through query params, the asset is not unlocked and only id, type, name, description and privacy object are provided.&#x20;
+
+If the <mark style="color:blue;">**`secret_token`**</mark>(password) is provided the asset is unlocked and can be fully viewed.
 {% endswagger-description %}
 
 {% swagger-parameter in="path" name="id" type="String" required="true" %}
@@ -630,11 +636,9 @@ Account Public Object **\<AccountPublicObject>**
 
 {% swagger method="get" path="/assets/:id/public" baseUrl="https://api.zi.mt" summary="" %}
 {% swagger-description %}
-<mark style="color:green;">
+<mark style="color:green;">**`PUBLIC`**</mark>
 
-**`PUBLIC`**
-
-</mark>
+If the asset is protected in the response list the asset will have the same data as in get single id, type, name, description and privacy object.
 {% endswagger-description %}
 
 {% swagger-parameter in="path" name="id" type="String" required="true" %}
@@ -808,11 +812,9 @@ asset.ownership.account\_id
 
 {% swagger method="post" summary="" path="/assets/search" baseUrl="https://api.zi.mt" %}
 {% swagger-description %}
-<mark style="color:red;">
+<mark style="color:red;">**`AUTHORIZED`**</mark>
 
-**`AUTHORIZED`**
-
-</mark>
+If the asset is protected in the response list the asset will have the same data as in get single id, type, name, description and privacy object.
 {% endswagger-description %}
 
 {% swagger-parameter in="body" name="query" type="Object" required="true" %}
@@ -1095,11 +1097,13 @@ Unique asset id
 
 
 
-Assets are public by default.
+Assets can be by default accessed in full from the owner of the asset and admins/super admins of the organization.&#x20;
 
-If the parameter protected is defined security\_token&#x20;
+If the asset's privacy is change the following will occur:&#x20;
 
+&#x20;\- By setting private to true, the asset is considered private and can be viewed only by the asset's owner. In all asset's fetching endpoints.&#x20;
 
+&#x20;\- By setting protected to true and secret\_token to a string which is the raw password the user provided encrypted.
 {% endswagger-description %}
 
 {% swagger-parameter in="path" name="id" type="String" required="true" %}
